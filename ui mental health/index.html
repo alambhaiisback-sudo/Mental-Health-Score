@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MindCare AI – Mental Health Insights</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="navbar">
+  <div class="nav-inner">
+    <div class="logo" aria-hidden="true">🧠</div>
+    <div>
+      <h1>MindCare AI</h1>
+      <p>Mental Health Insights</p>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="card" aria-labelledby="form-title">
+    <h2 id="form-title">Your daily habits</h2>
+    <p class="intro">Fill in every field to get a predicted mental health score from the ML model.</p>
+
+    <div id="error-banner" class="banner" role="alert" hidden></div>
+
+    <form id="predict-form" novalidate>
+      <div class="grid">
+        <div class="field">
+          <label for="age">🎂 Age</label>
+          <input type="number" id="age" name="Age" min="10" max="100" step="1" placeholder="e.g. 21" required>
+          <span class="err" data-for="age"></span>
+        </div>
+        <div class="field">
+          <label for="gender">👤 Gender</label>
+          <select id="gender" name="Gender" required>
+            <option value="" disabled selected>Select gender</option>
+            <option>Male</option><option>Female</option>
+          </select>
+          <span class="err" data-for="gender"></span>
+        </div>
+        <div class="field">
+          <label for="country">🌍 Country</label>
+          <input type="text" id="country" name="Country" placeholder="e.g. India" required>
+          <span class="err" data-for="country"></span>
+        </div>
+        <div class="field">
+          <label for="academic">🎓 Academic Level</label>
+          <select id="academic" name="Academic_Level" required>
+            <option value="" disabled selected>Select level</option>
+            <option>Undergraduate</option><option>Graduate</option><option>High School</option>
+          </select>
+          <span class="err" data-for="academic"></span>
+        </div>
+        <div class="field">
+          <label for="platform">📱 Most Used Platform</label>
+          <select id="platform" name="Most_Used_Platform" required>
+            <option value="" disabled selected>Select platform</option>
+            <option>Facebook</option><option>LinkedIn</option><option>Instagram</option>
+            <option>Snapchat</option><option>Twitter</option><option>YouTube</option>
+            <option>TikTok</option><option>LINE</option><option>KakaoTalk</option>
+            <option>VKontakte</option><option>WhatsApp</option><option>WeChat</option>
+          </select>
+          <span class="err" data-for="platform"></span>
+        </div>
+        <div class="field">
+          <label for="purpose">🎯 Purpose of Use</label>
+          <select id="purpose" name="Purpose_Of_Use" required>
+            <option value="" disabled selected>Select purpose</option>
+            <option>Networking</option><option>Education</option><option>Entertainment</option><option>News</option>
+          </select>
+          <span class="err" data-for="purpose"></span>
+        </div>
+        <div class="field">
+          <label for="usage">⏱️ Average Daily Usage Hours</label>
+          <input type="number" id="usage" name="Avg_Daily_Usage_Hours" min="0" max="24" step="0.1" placeholder="0 – 24" required>
+          <span class="err" data-for="usage"></span>
+        </div>
+        <div class="field">
+          <label for="unlocks">🔓 Daily Unlocks</label>
+          <input type="number" id="unlocks" name="Daily_Unlocks" min="0" step="1" placeholder="e.g. 80" required>
+          <span class="err" data-for="unlocks"></span>
+        </div>
+        <div class="field">
+          <label for="study">📚 Study Hours</label>
+          <input type="number" id="study" name="Study_Hours" min="0" max="24" step="0.1" placeholder="0 – 24" required>
+          <span class="err" data-for="study"></span>
+        </div>
+        <div class="field">
+          <label for="activity">🏃 Physical Activity Hours</label>
+          <input type="number" id="activity" name="Physical_Activity_Hours" min="0" max="2" step="0.1" placeholder="0 – 2" required>
+          <span class="err" data-for="activity"></span>
+        </div>
+        <div class="field">
+          <label for="sleep">😴 Sleep Hours Per Night</label>
+          <input type="number" id="sleep" name="Sleep_Hours_Per_Night" min="0" max="24" step="0.1" placeholder="0 – 24" required>
+          <span class="err" data-for="sleep"></span>
+        </div>
+        <div class="field">
+          <label for="stress">⚡ Stress Level</label>
+          <select id="stress" name="Stress_Level" required>
+            <option value="" disabled selected>Select stress level</option>
+            <option>Medium</option><option>Low</option><option>Very High</option><option>High</option>
+          </select>
+          <span class="err" data-for="stress"></span>
+        </div>
+      </div>
+
+      <button type="submit" id="submit-btn" class="btn">
+        <span class="spinner" aria-hidden="true"></span>
+        <span class="btn-label">Predict Mental Health Score</span>
+      </button>
+    </form>
+  </section>
+
+  <section id="result-card" class="card result" aria-live="polite" hidden>
+    <h2>Your predicted score</h2>
+    <div class="ring-wrap">
+      <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
+        <defs>
+          <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#4f46e5"/><stop offset="100%" stop-color="#8b5cf6"/>
+          </linearGradient>
+        </defs>
+        <circle class="ring-bg" cx="60" cy="60" r="52"/>
+        <circle id="ring-fg" class="ring-fg" cx="60" cy="60" r="52"/>
+      </svg>
+      <div class="ring-text"><span id="score-value">–</span><small>model score</small></div>
+    </div>
+    <p class="disclaimer">💙 This score is a machine learning model prediction based on the information you entered. It is not a medical diagnosis.</p>
+  </section>
+</main>
+
+<footer class="footer">MindCare AI · For informational purposes only</footer>
+<script src="script.js"></script>
+</body>
+</html>
